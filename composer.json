@@ -1,5 +1,5 @@
 {
-    "name": "tdavis-ourfuture/SalsaPHP",
+    "name": "SalsaPHP",
     "description": "A little PHP sugar for the Salsa Labs API.",
     "license": "MIT",
     "keywords": ["Salsa"],
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "tdavis-ourfuture\\SalsaPHP\\": "src"
+            "SalsaPHP\\": "src/"
         }
     }
 }
