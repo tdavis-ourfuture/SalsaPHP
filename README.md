@@ -29,6 +29,7 @@ $replyto = 'no-reply@test.org';
 $key = EmailBlast::create($refname,$subject,$html,$text,$fromname,$fromaddress,$replyto);
 $res = EmailBlast::setQuery($key,2387);  // The 2387 is your target query.  See Salsa interface.
 $res = EmailBlast::scheduleEmail($key,'2015-10-10 10:10:10);
+```
 
 ##Unsubscribe a user from everything
 
