@@ -40,7 +40,7 @@ You're going need to get your api url.  Read <a href="https://help.salsalabs.com
 
 You will also need a username and password with api permissions. It's preferable to create a specific user in your management page to interact with the API programmatically.
 
-##Initiate the client
+###Initiate the client
 
 ```php
 SalsaPHP\SalsaPHP::setUserName('yourusername');
@@ -48,8 +48,9 @@ SalsaPHP\SalsaPHP::setPassword('yourpassword');
 SalsaPHP\SalsaPHP::setApiBase('http:/api.yoursalsaurl.com');
 SalsaPHP\SalsaPHP::initClient();
 ```
+##Emails
 
-##Send an email blast
+###Send an email blast
 Sending an email blast is a multistep process, but SalsaPHP makes it simple.  
 
 1.  Create the email blast using EmailBlast::create
@@ -71,18 +72,48 @@ $res = SalsaPHP\EmailBlast::setQuery($key,2387);  // The 2387 is your target que
 $res = SalsaPHP\EmailBlast::scheduleEmail($key,'2015-10-10 10:10:10);
 ```
 
-##Get Email Blast Statistics
+###Get Email Blast Statistics
 ```php
 $stats = SalsaPHP\EmailBlast::Statistics(121112); // Use your email_blast_KEY
 ```
 
-##List Email Blasts
+###List Email Blasts
 ```php
 $stats = SalsaPHP\EmailBlast::listEmails(); 
 ```
+###Get results from an email test set.
+TODO
 
-##Unsubscribe a user from everything
+##Supporters
+
+###Unsubscribe a user from everything
 
 ```php
 $res = SalsaPHP\Supporter::unsubscribeAll(1289323); 
 ```
+##Add a supporter to a group
+
+```php
+$res = SalsaPHP\Supporter::addSupporterToGroup(1289323,12); 
+```
+
+##Remove a supporter from a group
+
+```php
+$res = SalsaPHP\Supporter::deleteSupporterFromGroup(1289323,12); 
+```
+
+##Actions
+
+TODO
+
+##Groups
+
+TODO
+
+##Donation 
+
+TODO
+
+
+
