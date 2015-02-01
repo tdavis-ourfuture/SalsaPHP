@@ -1,4 +1,6 @@
 <?php
+namespace SalsaPHP;
+
 /**
  * SalsaPHP
  *
@@ -11,13 +13,14 @@
 /**
  * Group
  * 
- * Class for reading and writing supporter groups.
+ * Class for reading and writing  groups.
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
  * @version .1
  * @package SalsaPHP
  */
 class Group {	
+
 
 	
 

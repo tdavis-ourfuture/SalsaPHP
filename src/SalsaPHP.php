@@ -1,4 +1,6 @@
 <?php
+namespace SalsaPHP;
+use Guzzle;
 /**
  * SalsaPHP
  *

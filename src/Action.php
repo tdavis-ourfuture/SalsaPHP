@@ -1,4 +1,6 @@
 <?php
+namespace SalsaPHP;
+
 /**
  * SalsaPHP
  *
@@ -21,5 +23,5 @@
 
 class Action {
 
-	
+
 }
