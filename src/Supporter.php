@@ -54,10 +54,7 @@ class Supporter {
 				throw new Exception('Fields must be an array');
 		}
 
-		$args = array(
-							'object' => 'supporter', 
-							'json' => '1',
-							'key'=>$supporter_KEY);
+		$args = array('object' => 'supporter', 'json' => '1','key'=>$supporter_KEY);
 
 
 		$args = array_merge($args,$fields);
@@ -67,7 +64,6 @@ class Supporter {
 		$result=$req->send();
 
 		return json_decode($result->getBody());
-
 	}
 
 
@@ -91,10 +87,7 @@ class Supporter {
 							'linkKey' =>$group_KEY,
 							'key'=>$supporter_KEY);
 
-
-
 		$req = $client->post('/save',  array(), $args);
-
 		$result=$req->send();
 
 		$result =  json_decode($result->getBody());
@@ -108,6 +101,13 @@ class Supporter {
 
 	}
 
+  /**
+   * Remove individual supporter from a group.
+   *
+   * @param int $supporter_KEY
+   * @param int $group_KEY
+   * @param array $fields
+   */
 	public static function deleteSupporterFromGroup($supporter_KEY,$group_KEY){
 	$client = SalsaPHP::getClient();
 
@@ -148,6 +148,26 @@ class Supporter {
 		}
 
 		return true;
+	}
+
+  /**
+   * Unsubscribe supporter from all lists.
+   *
+   * @param int $supporter_KEY
+   */
+	public static function unsubscribeAll($supporter_KEY){
+		$client = SalsaPHP::getClient();
+		$args = array('object' => 'supporter', 'json' => '1','key'=>$supporter_KEY,
+			'Receive_Email'=>'0');
+
+		$req = $client->post('/save',  array(), $args);
+		$result=$req->send();
+		$result = json_decode($result->getBody());
+
+		 if ($result[0]->result !='success'){
+		 	throw new Exception('Failed to unsubscribe supporter');
+		 }
+		 return true;
 	}
 
 }

@@ -58,7 +58,7 @@ class EmailBlast {
 
 		}
   /**
-   * Target a blast with a query.
+   * Assign a particular query to a blast.
    *
    * @param int $email_blast_KEY
    * @param int $query_KEY
