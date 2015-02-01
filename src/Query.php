@@ -1,8 +1,30 @@
 <?php
+/**
+ * SalsaPHP
+ *
+ * PHP Version 5.4
+ *
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      https://github.com/tdavis-ourfuture/SalsaPHP
+ */
 
+/**
+ * Query
+ * 
+ * List individual and multiple Salsa queries for targeting supporters.
+ *
+ * @author Trevor Davis <tdavis@ourfutureorg>
+ * @version .1
+ * @package SalsaPHP
+ */
 class Query {
 
 
+  /**
+   * Lists queries.
+   *
+   * @param int $limit
+   */
 	public static function listQuery($limit=500){
 
 		$client = SalsaPHP::getClient();
@@ -20,6 +42,11 @@ class Query {
 		return json_decode($result->getBody());
 	}	
 
+  /**
+   * Get individual query.
+   *
+   * @param int $query_KEY
+   */
 	public static function  getQuery($query_KEY){
 
 		$client = SalsaPHP::getClient();

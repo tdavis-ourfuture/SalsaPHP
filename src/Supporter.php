@@ -1,8 +1,30 @@
 <?php
+/**
+ * SalsaPHP
+ *
+ * PHP Version 5.4
+ *
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      https://github.com/tdavis-ourfuture/SalsaPHP
+ */
 
+/**
+ * Supporter
+ * 
+ * Read and write from the suporter table.
+ *
+ * @author Trevor Davis <tdavis@ourfutureorg>
+ * @version .1
+ * @package SalsaPHP
+ */
 class Supporter {	
 
-	
+
+  /**
+   * Get individual supporter.
+   *
+   * @param int $supporter_KEY
+   */
 	public static function getSupporter($supporter_KEY){
 		$client = SalsaPHP::getClient();
 
@@ -19,7 +41,12 @@ class Supporter {
 
 		return $result[0];
 	}
-
+  /**
+   * Update individual supporter.
+   *
+   * @param int $supporter_KEY
+   * @param array $fields
+   */
 	public static function updateSupporter($supporter_KEY,$fields){
 		$client = SalsaPHP::getClient();
 
@@ -41,9 +68,15 @@ class Supporter {
 
 		return json_decode($result->getBody());
 
-
 	}
 
+
+  /**
+   * Add individual supporter to group.
+   *
+   * @param int $supporter_KEY
+   * @param array $group_KEY
+   */
 	public static function addSupporterToGroup($supporter_KEY,$group_KEY){
 		$client = SalsaPHP::getClient();
 
@@ -74,4 +107,47 @@ class Supporter {
 
 
 	}
+
+	public static function deleteSupporterFromGroup($supporter_KEY,$group_KEY){
+	$client = SalsaPHP::getClient();
+
+
+		$req = $client->get('/api/getObjects.sjs',  array(), array(
+							'query' => array( 'object' => 'supporter_groups',
+			                'condition'=>'supporter_KEY='.$supporter_KEY,
+			                'json'=>1)
+							));
+
+		$result=$req->send();
+
+		$result = json_decode($result->getBody());
+
+		$filtered = array_filter( $result, function( $item ) use ( $group_KEY ) {
+			  if ($item->groups_KEY == $group_KEY  ) {
+			    return true;
+			  }
+			  return false;
+			} );
+
+		$res = array_pop($filtered);
+
+		$supporter_groups_KEY =$res->supporter_groups_KEY;
+
+
+		$reqb = $client->get('/delete',  array(), array(
+									'query' => array( 'object' => 'supporter_groups',
+					                'key'=>$supporter_groups_KEY,'json'=>1)
+									));
+		$result=$reqb->send();
+
+
+		$result = json_decode($result->getBody());
+
+		if (is_array($result)){
+			throw new Exception('Failed to remove user from group.');
+		}
+
+		return true;
+	}
+
 }

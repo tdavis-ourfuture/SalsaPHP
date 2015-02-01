@@ -1,5 +1,22 @@
 <?php
+/**
+ * SalsaPHP
+ *
+ * PHP Version 5.4
+ *
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      https://github.com/tdavis-ourfuture/SalsaPHP
+ */
 
+/**
+ * EmailBlast
+ * 
+ * Class for reading and writing email blasts.
+ *
+ * @author Trevor Davis <tdavis@ourfutureorg>
+ * @version .1
+ * @package SalsaPHP
+ */
 class EmailBlast {
 
     /**
@@ -40,7 +57,12 @@ class EmailBlast {
 		return $result[0]->key;
 
 		}
-
+  /**
+   * Target a blast with a query.
+   *
+   * @param int $email_blast_KEY
+   * @param int $query_KEY
+   */
 	public static function setQuery($email_blast_KEY,$query_KEY){
 		$client = SalsaPHP::getClient();
 
@@ -57,13 +79,14 @@ class EmailBlast {
 
 		$result=$req->send();
 
-
-
 		return true;
-
-
 	}
-
+  /**
+   * Schedule a blast.
+   *
+   * @param int $email_blast_KEY
+   * @param string $time_scheduled
+   */
 	public static function scheduleEmail($email_blast_KEY,$time_scheduled){
 		$client = SalsaPHP::getClient();
 
@@ -90,7 +113,11 @@ class EmailBlast {
 	}
 
 
-	
+  /**
+   * Get a blast from the email_blast table.
+   *
+   * @param int $email_blast_KEY
+   */	
 	public static function getEmail($email_blast_KEY){
 		$client = SalsaPHP::getClient();
 
@@ -109,6 +136,11 @@ class EmailBlast {
 		return $result[0];
 	}
 
+  /**
+   * List email blasts.
+   *
+   * @param int $limit
+   */	
 	public static function listEmails($limit=500){
 		$client = SalsaPHP::getClient();
 
@@ -125,7 +157,11 @@ class EmailBlast {
 
 		return json_decode($result->getBody());
 	}
-
+  /**
+   * Get statistics about an individual email blast.
+   *
+   * @param int $email_blast_KEY
+   */	
 	public static function Statistics($email_blast_KEY){
 		$client = SalsaPHP::getClient();
 		$req = $client->get('/api/getObjects.sjs',  array(), array(

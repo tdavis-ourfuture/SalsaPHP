@@ -1,5 +1,22 @@
 <?php
+/**
+ * SalsaPHP
+ *
+ * PHP Version 5.4
+ *
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      https://github.com/tdavis-ourfuture/SalsaPHP
+ */
 
+/**
+ * SalsaPHP
+ * 
+ * Abstract class to hold settings and suchlike.
+ *
+ * @author Trevor Davis <tdavis@ourfutureorg>
+ * @version .1
+ * @package SalsaPHP
+ */
 abstract class SalsaPHP
 {
   /**
@@ -43,6 +60,7 @@ abstract class SalsaPHP
   const VERSION = '1.18.0';
 
   /**
+   * Gets the UserName to be used for requests.
    * @return string The UserName used for requests.
    */
   public static function getUserName()
@@ -76,6 +94,7 @@ abstract class SalsaPHP
 
 
   /**
+   * Initiates the guzzle client used for requests.
    * @return Client The  guzzle client used for requests.
    */
   public static function getClient()
@@ -84,6 +103,7 @@ abstract class SalsaPHP
   }
 
   /**
+   * Initiates the guzzle client used for requests.
    * @return string The Password used for requests.
    */
   public static function getPassword()
@@ -101,6 +121,7 @@ abstract class SalsaPHP
     self::$password = $password;
   }
   /**
+   * Initiates the guzzle client used for requests.
    * @return string The API version used for requests. null if we're using the
    *    latest version.
    */
@@ -109,6 +130,7 @@ abstract class SalsaPHP
     return self::$apiVersion;
   }
   /**
+   * Initiates the guzzle client used for requests.
    * @return string The Organization Key used for requests.
    */
   public static function getOrganizationKey()
@@ -125,6 +147,7 @@ abstract class SalsaPHP
     self::$organizationKey = $organizationKey;
   }
   /**
+   * Initiates the guzzle client used for requests.
    * @return string The API Base URL used for requests.
    */
   public static function getApiBase()
@@ -142,6 +165,8 @@ abstract class SalsaPHP
     self::$apiBase = $apiBase;
   }
   /**
+   * Sets the API Version to be used for requests.
+   *
    * @param string $apiVersion The API version to use for requests.
    */
   public static function setApiVersion($apiVersion)
@@ -149,22 +174,10 @@ abstract class SalsaPHP
     self::$apiVersion = $apiVersion;
   }
 
-  /**
-   * @return boolean
-   */
-  public static function getVerifySslCerts()
-  {
-    return self::$verifySslCerts;
-  }
 
   /**
-   * @param boolean $verify
-   */
-  public static function setVerifySslCerts($verify)
-  {
-    self::$verifySslCerts = $verify;
-  }
-  /**
+   * Gets the Session Cookie to be used for requests.
+   *
    * @return string The SessionCookie used for requests.
    */
   public static function getSessionCookie()
