@@ -12,6 +12,7 @@ SalsaPHP::setUserName('yourusername');
 SalsaPHP::setPassword('yourpassword');
 SalsaPHP::setApiBase('http:/api.yoursalsaurl.com');
 SalsaPHP::initClient();
+```
 
 ##Send an email blast
 
@@ -33,3 +34,4 @@ $res = EmailBlast::scheduleEmail($key,'2015-10-10 10:10:10);
 
 ```php
 $res = Supporter::unsubscribeAll(1289323); 
+```
