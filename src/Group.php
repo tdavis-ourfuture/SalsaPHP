@@ -13,7 +13,7 @@ namespace SalsaPHP;
 /**
  * Group
  * 
- * Class for reading and writing  groups.
+ * Class for reading from groups table.
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
  * @version .1
@@ -22,7 +22,20 @@ namespace SalsaPHP;
 class Group {	
 
 
-	
+  /**
+   * List groups   *
+   * @param int $limit
+   */	
+	public static function listGroups($limit=500){
+		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
+							'query' => array( 'object' => 'groups',
+			                'orderBy'=>'-groups_KEY',
+			                'limit'=>$limit,
+			                'include'=>'groups_KEY,organization_KEY,chapter_KEY,Last_Modified,Date_Created,Group_Name,Reference_Name,Display_To_User,query_KEY,Smart_Group_Options',
+			                'json'=>1)
+							))->send();
+		return json_decode($result->getBody());
+	}
 
 
 }	

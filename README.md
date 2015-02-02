@@ -40,14 +40,11 @@ You're going need to get your api url.  Read <a href="https://help.salsalabs.com
 
 You will also need a username and password with api permissions. It's preferable to create a specific user in your management page to interact with the API programmatically.
 
-####Initiate the client
+####Connect to the API
 
 ```php
-SalsaPHP\SalsaPHP::setUserName('yourusername');
-SalsaPHP\SalsaPHP::setPassword('yourpassword');
-SalsaPHP\SalsaPHP::setApiBase('http:/api.yoursalsaurl.com');
-SalsaPHP\SalsaPHP::initClient();
-```
+SalsaPHP\SalsaPHP::connect('myemail@organization.org','yourpassword','https://api.yoursalsadomain.org');
+
 ##Emails
 
 ####Send an email blast

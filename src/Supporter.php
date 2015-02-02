@@ -43,6 +43,29 @@ class Supporter {
 
 		return $result[0];
 	}
+
+  /**
+   * Get single supporter key by email address
+   *
+   * @param email $email
+   */
+	public static function getSupporterKeyByEmail($email){
+		
+		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
+							'query' => array( 'object' => 'supporter',
+		   		             'orderBy'=>'-supporter_KEY',
+   		            		 'include'=>'supporter_KEY',
+			                'condition'=>'Email='.$email,
+			                'json'=>1)
+							))->send()->getBody();
+
+
+		$result = json_decode($result);
+
+		return $result[0]->supporter_KEY;
+
+	}
+
   /**
    * Update individual supporter.
    *
@@ -76,21 +99,17 @@ class Supporter {
    * @param array $group_KEY
    */
 	public static function addSupporterToGroup($supporter_KEY,$group_KEY){
-		$client = SalsaPHP::getClient();
-
 		if (!is_int($group_KEY)) {
 				throw new Exception('Group KEY must be an integer');
 		}
 
-		$args = array(
-							'object' => 'supporter', 
+		$args = array(		'object' => 'supporter', 
 							'json' => '1',
 							'link'	=> 'groups',
 							'linkKey' =>$group_KEY,
 							'key'=>$supporter_KEY);
 
-		$req = $client->post('/save',  array(), $args);
-		$result=$req->send();
+		$result = SalsaPHP::getClient()->post('/save',  array(), $args)->send();
 
 		$result =  json_decode($result->getBody());
 

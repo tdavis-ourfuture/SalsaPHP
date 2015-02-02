@@ -61,6 +61,23 @@ abstract class SalsaPHP
   public static $verifySslCerts = true;
   const VERSION = '1.18.0';
 
+
+  /**
+   * Connects to SalsaAPI
+   * @return string The UserName used for requests.
+   */
+  public static function connect($email,$password,$apibase)
+  {
+
+      self::setPassword($password);
+      self::setUserName($email);
+      self::setApiBase($apibase);
+      self::initClient();
+
+      return true;
+  }
+
+
   /**
    * Gets the UserName to be used for requests.
    * @return string The UserName used for requests.
