@@ -97,22 +97,36 @@ $res = SalsaPHP\Supporter::addSupporterToGroup(1289323,12);
 ```
 
 ####Remove a supporter from a group
-
 ```php
 $res = SalsaPHP\Supporter::deleteSupporterFromGroup(1289323,12); 
 ```
 
 ##Actions
-
-TODO
+List actions.
+```php
+$res = SalsaPHP\Action\lisActions();
+```
+Add a supporter to a particular action.
+```php
+$res = SalsaPHP\Action\addSupporterAction(354927040,234); //supporter key, action key 
+```
 
 ##Groups
-
-TODO
+List groups.
+```php
+$res = SalsaPHP\Group\listGroups();
+```
 
 ##Donation 
 
-TODO
+Get individual supporter's donations
+```php
+$res = getSupporterDonations(1289323);
+```
 
+Log a donation to salsa
+```php
+$res = addSupporterDonations(1289323,50,'Joe','Von Donorguy','joe@example.com');
+```
 
 
