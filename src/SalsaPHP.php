@@ -1,6 +1,4 @@
 <?php
-namespace SalsaPHP;
-use Guzzle;
 /**
  * SalsaPHP
  *
@@ -9,6 +7,9 @@ use Guzzle;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/tdavis-ourfuture/SalsaPHP
  */
+
+namespace SalsaPHP;
+use Guzzle;
 
 /**
  * SalsaPHP

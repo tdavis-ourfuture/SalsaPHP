@@ -1,6 +1,4 @@
 <?php
-namespace SalsaPHP;
-
 /**
  * SalsaPHP
  *
@@ -9,6 +7,9 @@ namespace SalsaPHP;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/tdavis-ourfuture/SalsaPHP
  */
+
+namespace SalsaPHP;
+
 
 /**
  * Action
@@ -26,6 +27,7 @@ class Action {
   /**
    * List actions   *
    * @param int $limit
+   * @return array 
    */	
 	public static function listActions($limit=500){
 		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
@@ -37,7 +39,8 @@ class Action {
 	}
   /**
    * Add user to action  
-   * @param int $limit
+   * @param int $supporter_KEY
+   * @param int $action_KEY
    */	
 	public static function addSupporterAction($supporter_KEY,$action_KEY){
 		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(

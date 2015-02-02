@@ -1,14 +1,15 @@
 <?php
-namespace SalsaPHP;
-
 /**
  * SalsaPHP
  *
  * PHP Version 5.4
  *
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @version .1
  * @link      https://github.com/tdavis-ourfuture/SalsaPHP
  */
+
+namespace SalsaPHP;
 
 /**
  * EmailBlast
@@ -87,7 +88,7 @@ class EmailBlast {
    * Schedule a blast.
    *
    * @param int $email_blast_KEY
-   * @param string $time_scheduled
+   * @param string $time_scheduled Date and time email is to be sent.  Must be in the future.
    */
 	public static function scheduleEmail($email_blast_KEY,$time_scheduled){
 		$client = SalsaPHP::getClient();
@@ -119,6 +120,7 @@ class EmailBlast {
    * Get a blast from the email_blast table.
    *
    * @param int $email_blast_KEY
+   * @return array
    */	
 	public static function getEmail($email_blast_KEY){
 		$client = SalsaPHP::getClient();
@@ -142,6 +144,7 @@ class EmailBlast {
    * List email blasts.
    *
    * @param int $limit
+   * @return array
    */	
 	public static function listEmails($limit=500){
 		$client = SalsaPHP::getClient();
@@ -163,6 +166,7 @@ class EmailBlast {
    * Get statistics about an individual email blast.
    *
    * @param int $email_blast_KEY
+   * @return array
    */	
 	public static function Statistics($email_blast_KEY){
 		$client = SalsaPHP::getClient();

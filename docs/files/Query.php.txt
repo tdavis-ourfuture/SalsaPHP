@@ -1,5 +1,4 @@
 <?php
-namespace SalsaPHP;
 
 /**
  * SalsaPHP
@@ -9,6 +8,8 @@ namespace SalsaPHP;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/tdavis-ourfuture/SalsaPHP
  */
+
+namespace SalsaPHP;
 
 /**
  * Query
