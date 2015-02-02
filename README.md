@@ -44,6 +44,7 @@ You will also need a username and password with api permissions. It's preferable
 
 ```php
 SalsaPHP\SalsaPHP::connect('myemail@organization.org','yourpassword','https://api.yoursalsadomain.org');
+```
 
 ##Emails
 
