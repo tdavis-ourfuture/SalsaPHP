@@ -182,4 +182,57 @@ class EmailBlast {
 		return array_pop(json_decode($result->getBody()));
 	}
 
+  /**
+   * Get a testing set results (using the a/b functions in salsa)
+   *
+   * @param int $email_blast_KEY
+   * @return array
+   */	
+	public static function getEmailBlastSet($email_blast_KEY){	
+
+
+		$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
+
+
+
+		$result=	SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
+							'query' => array( 'object' => 'email_blast_set_email_blast',
+			                'include'=>'email_blast_KEY',
+			                'condition'=>'email_blast_set_KEY='.$email_blast_set_KEY,
+			                'json'=>1)
+							))->send()->getBody();
+		$result = json_decode($result);
+
+		$output = array();
+
+
+		foreach ($result as $blast) {
+			$output[] = (object)array_merge((array)self::Statistics($blast->email_blast_KEY),(array)self::getEmail($blast->email_blast_KEY));
+
+
+		}
+		var_dump($output);
+		exit;
+
+	}
+
+  /**
+   * Get the email test set key.
+   *
+   * @param int $email_blast_KEY
+   * @return int
+   */	
+	private static function getSetKey($email_blast_KEY){
+				$result=	SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
+							'query' => array( 'object' => 'email_blast_set_email_blast',
+			                'include'=>'email_blast_set_KEY',
+			                'condition'=>'email_blast_KEY='.$email_blast_KEY,
+			                'json'=>1)
+							))->send()->getBody();
+		$result = json_decode($result);
+
+		if (!isset($result[0]->email_blast_set_KEY)){ throw new Exception('Not part of a test set.'); }
+
+		return $result[0]->email_blast_set_KEY;
+	}
 }

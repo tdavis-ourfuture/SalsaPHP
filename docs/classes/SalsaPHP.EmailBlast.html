@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="utf-8"/>
-    <title>    API Documentation &raquo; \SalsaPHP\EmailBlast
+    <title>    SalsaPHP Documentation &raquo; \SalsaPHP\EmailBlast
 </title>
     <meta name="author" content=""/>
     <meta name="description" content=""/>
@@ -33,13 +33,13 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span> <span class="icon-bar"></span>
                     <span class="icon-bar"></span> </a>
-                <a class="brand" href="../index.html">API Documentation</a>
+                <a class="brand" href="../index.html">SalsaPHP Documentation</a>
 
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li class="dropdown">
                             <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
-                                API Documentation <b class="caret"></b>
+                                SalsaPHP Documentation <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                                                     <li><a>Namespaces</a></li>
@@ -132,6 +132,12 @@
     </li>
 
                                                                                                         <li class="method public">
+        <a href="#method_getEmailBlastSet" title="getEmailBlastSet :: Get a testing set results (using the a/b functions in salsa)">
+            <span class="description">Get a testing set results (using the a/b functions in salsa)</span><pre>getEmailBlastSet</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                <li class="method public">
         <a href="#method_listEmails" title="listEmails :: List email blasts.">
             <span class="description">List email blasts.</span><pre>listEmails</pre>
         </a>
@@ -159,11 +165,16 @@
         </li>
         <li class="nav-header protected">» Protected
             <ul>
-                                                                                                                                                                                                                                                                    </ul>
+                                                                                                                                                                                                                                                                                                                                            </ul>
         </li>
         <li class="nav-header private">» Private
             <ul>
-                                                                                                                                                                                                                                                                    </ul>
+                                                                                                                                                                                        <li class="method private">
+                            <a href="#method_getSetKey" title="getSetKey :: Get the email test set key.">
+                                <span class="description">Get the email test set key.</span><pre>getSetKey</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                                </ul>
         </li>
         <li class="nav-header">
             <i class="icon-custom icon-constant"></i> Constants
@@ -299,6 +310,60 @@
                                                                             
                                                                             <h3>Response</h3>
                                         <code>array</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getEmailBlastSet"></a>
+                        <div class="element clickable method public  method_getEmailBlastSet" data-toggle="collapse" data-target=".method_getEmailBlastSet .collapse">
+                            <h2>Get a testing set results (using the a/b functions in salsa)</h2>
+                            <pre>getEmailBlastSet(integer $email_blast_KEY) : array</pre>
+                            <div class="labels">
+                                                                <span class="label">static</span>                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$email_blast_KEY</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getSetKey"></a>
+                        <div class="element clickable method private  method_getSetKey" data-toggle="collapse" data-target=".method_getSetKey .collapse">
+                            <h2>Get the email test set key.</h2>
+                            <pre>getSetKey(integer $email_blast_KEY) : integer</pre>
+                            <div class="labels">
+                                                                <span class="label">static</span>                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$email_blast_KEY</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>integer</code><p></p>
                                                                     </div>
                             </div>
 
@@ -451,7 +516,7 @@
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by
             <a href="http://glyphicons.com/">Glyphicons</a>.<br/>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and<br/>
-            generated on Mon, 02 Feb 2015 13:16:38 -0500.<br/>
+            generated on Tue, 03 Feb 2015 12:29:21 -0500.<br/>
     </footer>
     </body>
 </html>

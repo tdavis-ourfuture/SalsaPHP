@@ -78,11 +78,11 @@ $stats = SalsaPHP\EmailBlast::Statistics(121112); // Use your email_blast_KEY
 ####List Email Blasts
 ```php
 $stats = SalsaPHP\EmailBlast::listEmails(); 
-
 ```
 ####Get results from an email test set.
-TODO
-
+```php
+$stats = SalsaPHP\EmailBlast::getEmailBlastSet(123123);   // Use the email_blast_KEY for the original blast
+```
 ##Supporters
 
 ###Unsubscribe a user from everything
@@ -102,7 +102,7 @@ $res = SalsaPHP\Supporter::deleteSupporterFromGroup(1289323,12);
 ```
 
 ##Actions
-List actions.
+####List actions.
 ```php
 $res = SalsaPHP\Action\lisActions();
 ```
@@ -112,21 +112,27 @@ $res = SalsaPHP\Action\addSupporterAction(354927040,234); //supporter key, actio
 ```
 
 ##Groups
-List groups.
+####List groups.
 ```php
 $res = SalsaPHP\Group\listGroups();
 ```
 
 ##Donation 
 
-Get individual supporter's donations
+####Get individual supporter's donations
 ```php
 $res = getSupporterDonations(1289323);
 ```
 
-Log a donation to salsa
+####Log a donation to salsa
 ```php
 $res = addSupporterDonations(1289323,50,'Joe','Von Donorguy','joe@example.com');
 ```
 
+Contact
+-------
+
+Feel free to get in touch with questions
+* Github:  [https://github.com/tdavis-ourfuture/SalsaPHP](https://github.com/tdavis-ourfuture/SalsaPHP)
+* E-mail:  [tdavis@ourfuture.org](tdavis@ourfuture.org)
 
