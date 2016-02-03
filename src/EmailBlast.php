@@ -128,7 +128,7 @@ class EmailBlast {
 
 		$req = $client->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'email_blast',
-			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters',
+			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,list,number_failed,number_sent,total_target_supporters',
 			                'condition'=>'email_blast_KEY='.$email_blast_KEY,
 			                'json'=>1)
 							));
@@ -154,7 +154,7 @@ class EmailBlast {
 							'query' => array( 'object' => 'email_blast',
 			                'orderBy'=>'-email_blast_KEY',
 			                'limit'=>$limit,
-			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters',
+			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters,HTML_Content',
 			                'json'=>1)
 							));
 
