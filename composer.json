@@ -3,7 +3,7 @@
     "description": "A little PHP sugar for the Salsa Labs API.",
     "license": "MIT",
     "keywords": ["Salsa"],
-    "version" : "0.1.0",
+    "version" : "0.1.1",
     "authors": [
         {
             "name": "Trevor Davis",
