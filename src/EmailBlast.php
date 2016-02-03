@@ -124,19 +124,14 @@ class EmailBlast {
    */	
 	public static function getEmail($email_blast_KEY){
 		$client = SalsaPHP::getClient();
-
-
 		$req = $client->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'email_blast',
-			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,list,number_failed,number_sent,total_target_supporters',
+			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters',
 			                'condition'=>'email_blast_KEY='.$email_blast_KEY,
 			                'json'=>1)
 							));
-
 		$result=$req->send();
-
 		$result = json_decode($result->getBody());
-
 		return $result[0];
 	}
 
@@ -178,8 +173,10 @@ class EmailBlast {
 							));
 
 		$result=$req->send();
-
-		return array_pop(json_decode($result->getBody()));
+	$result = $result->getBody();
+	$result= json_decode($result);
+		$result =  array_pop($result);
+		return $result;
 	}
 
   /**
