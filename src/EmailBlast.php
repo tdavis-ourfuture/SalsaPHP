@@ -141,22 +141,48 @@ class EmailBlast {
    * @param int $limit
    * @return array
    */	
-	public static function listEmails($limit=500){
-		$client = SalsaPHP::getClient();
+	public static function listEmails($limit=500,$total_target=null){
+	          
+	       if ($limit<=500){
+	           return self::_listEmails($limit,$total_target,0);
+	       }	           
+	        $o = round(($limit/500));
+            $i=0;
+	        $results = array();
+            while ($i<= $o) {
+                   $offset = 500 * $i;
+                   
+                   $progress= self::_listEmails(500,$total_target,$offset);
+                 $results =	 array_merge($results,$progress);
+              
+            }
+	           
+	   return $results;
 
-
-		$req = $client->get('/api/getObjects.sjs',  array(), array(
-							'query' => array( 'object' => 'email_blast',
-			                'orderBy'=>'-email_blast_KEY',
-			                'limit'=>$limit,
-			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters,HTML_Content',
-			                'json'=>1)
-							));
-
-		$result=$req->send();
-
-		return json_decode($result->getBody());
 	}
+	
+    public static function _listEmails($limit=500,$total_target=null,$offset=0){
+        
+        $client = SalsaPHP::getClient();
+        $query =  [ 'object' => 'email_blast',
+            'orderBy'=>'-email_blast_KEY',
+            'limit'=>$offset.','.$limit,
+            'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters,HTML_Content',
+            'json'=>1];
+        
+        if (!empty($total_target)){
+            $query['condition'] ='total_target_supporters>'.$total_target;
+        }
+        
+        
+        $req = $client->get('/api/getObjects.sjs',  array(), array(
+            'query' => $query
+        ));
+        
+        $result=$req->send();
+        
+        return json_decode($result->getBody());
+    }
   /**
    * Get statistics about an individual email blast.
    *
