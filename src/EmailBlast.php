@@ -141,10 +141,10 @@ class EmailBlast {
    * @param int $limit
    * @return array
    */	
-	public static function listEmails($limit=500,$total_target=null){
+	public static function listEmails($limit=500,$total_target=null,$email_blast_start=null){
 	          
 	       if ($limit<=500){
-	           return self::_listEmails($limit,$total_target,0);
+	           return self::_listEmails($limit,$total_target,0,$email_blast_start);
 	       }	           
 	        $o = round(($limit/500));
             $i=0;
@@ -161,7 +161,7 @@ class EmailBlast {
 
 	}
 	
-    public static function _listEmails($limit=500,$total_target=null,$offset=0){
+    public static function _listEmails($limit=500,$total_target=null,$offset=0,$email_blast_start=null){
         
         $client = SalsaPHP::getClient();
         $query =  [ 'object' => 'email_blast',
@@ -169,12 +169,20 @@ class EmailBlast {
             'limit'=>$offset.','.$limit,
             'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters,HTML_Content',
             'json'=>1];
+           
+        if (!empty($email_blast_start)){
         
-        if (!empty($total_target)){
-            $query['condition'] ='total_target_supporters>'.$total_target;
+            $query['condition'] = 'email_blast_KEY>'.$email_blast_start;
+        
         }
+       elseif (!empty($total_target)){
+            $query['condition'] = (empty($query['condition'])) ? 'total_target_supporters>'.$total_target  : $query['condition'].'&total_target_supporters>'.$total_target; 
         
+        }
+
+
         
+
         $req = $client->get('/api/getObjects.sjs',  array(), array(
             'query' => $query
         ));
@@ -188,7 +196,7 @@ class EmailBlast {
    *
    * @param int $email_blast_KEY
    * @return array
-   */	
+   */
 	public static function Statistics($email_blast_KEY){
 		$client = SalsaPHP::getClient();
 		$req = $client->get('/api/getObjects.sjs',  array(), array(
