@@ -60,10 +60,11 @@ class Action {
    * @param int $supporter_KEY
    * @return array
    */
-	public static function getSupporterActions($supporter_KEY){
+	public static function getSupporterActions($supporter_KEY,$limit=10){
 		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'supporter_action',
-			                'limit'=>500,
+			                'limit'=>$limit,
+						    'orderBy'=>'-supporter_action_KEY',
 			                'condition'=>'supporter_KEY='.$supporter_KEY,
 			                'json'=>1)
 							))->send();
