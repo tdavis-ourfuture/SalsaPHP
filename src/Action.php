@@ -38,6 +38,23 @@ class Action {
 		return json_decode($result->getBody());
 	}
 
+	
+	/**
+	 * Get a single action
+	 * @param int $action_KEY
+	 * @return array
+	 */
+     public static function getAction($action_KEY){
+         $result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
+             'query' => array( 'object' => 'action',
+                 'limit'=>1,
+                 'condition'=>'action_KEY='.$action_KEY,
+                 'json'=>1)
+         ))->send();
+         $result = json_decode($result->getBody());
+         return array_pop($result);
+     }
+     
   /**
    * Get actions for a supporter actions   *
    * @param int $supporter_KEY
