@@ -59,11 +59,16 @@ class Action {
    * @param int $action_KEY
    */
 	public static function addSupporterAction($supporter_KEY,$action_KEY){
-		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
-							'query' => array( 'object' => 'action',
-			                'limit'=>$limit,
-			                'json'=>1)
-							))->send();
+		$client = SalsaPHP::getClient();
+
+		$args = array('object' => 'suppporter_action', 'json' => '1','supporter_KEY'=>$supporter_KEY,'action_KEY'=>$action_KEY);
+
+		$args = array_merge($args,$fields);
+
+		$req = $client->post('/save',  array(), $args);
+
+		$result=$req->send();
+
 		return json_decode($result->getBody());
 	}
 
