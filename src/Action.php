@@ -13,7 +13,7 @@ namespace SalsaPHP;
 
 /**
  * Action
- * 
+ *
  * Class for interacting with Salsa Actions
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
@@ -27,8 +27,8 @@ class Action {
   /**
    * List actions   *
    * @param int $limit
-   * @return array 
-   */	
+   * @return array
+   */
 	public static function listActions($limit=500){
 		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'action',
@@ -37,11 +37,27 @@ class Action {
 							))->send();
 		return json_decode($result->getBody());
 	}
+
   /**
-   * Add user to action  
+   * Get actions for a supporter actions   *
+   * @param int $supporter_KEY
+   * @return array
+   */
+	public static function getSupporterActions($supporter_KEY){
+		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
+							'query' => array( 'object' => 'action',
+			                'limit'=>500,
+			                'condition'=>'supporter_KEY='.$supporter_KEY,
+			                'json'=>1)
+							))->send();
+		return json_decode($result->getBody());
+	}
+
+  /**
+   * Add user to action
    * @param int $supporter_KEY
    * @param int $action_KEY
-   */	
+   */
 	public static function addSupporterAction($supporter_KEY,$action_KEY){
 		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'action',
