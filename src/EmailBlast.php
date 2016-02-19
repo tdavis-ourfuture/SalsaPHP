@@ -71,9 +71,6 @@ class EmailBlast {
 		public static function updateContent($email_blast_KEY,$html){
 		    $client = SalsaPHP::getClient();
 		
-		    if (Query::getQuery($query_KEY) == false) {
-		        throw new Exception('Invalid query key');
-		    }
 		
 		    $req = $client->post('/save',  array(), array(
 		        'object' => 'email_blast',
