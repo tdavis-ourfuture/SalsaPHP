@@ -60,6 +60,34 @@ class EmailBlast {
 		return $result[0]->key;
 
 		}
+		
+		
+		/**
+		 * Update the contente.  Really just a weird hack for private reasons.  Call it a joke, an aside. 
+		 *
+		 * @param int $email_blast_KEY
+		 * @param string $html
+		 */
+		public static function updateContent($email_blast_KEY,$html){
+		    $client = SalsaPHP::getClient();
+		
+		    if (Query::getQuery($query_KEY) == false) {
+		        throw new Exception('Invalid query key');
+		    }
+		
+		    $req = $client->post('/save',  array(), array(
+		        'object' => 'email_blast',
+		        'json' => '1',
+		        'key'=>$email_blast_KEY,
+		        'HTML_Content'=>$html
+		    ));
+		
+		    $result=$req->send();
+		
+		    return true;
+		}
+		
+		
   /**
    * Assign a particular query to a blast.
    *
