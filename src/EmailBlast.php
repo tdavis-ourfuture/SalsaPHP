@@ -14,7 +14,7 @@ namespace SalsaPHP;
 /**
  * EmailBlast
  * 
- * Class for reading and writing email blasts.
+ * Class for reading and writingddsafdsfadsf email blasts.
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
  * @version .1
@@ -240,7 +240,7 @@ class EmailBlast {
 	}
 
   /**
-   * Get a testing set results (using the a/b functions in salsa)
+   * Get a testing set 
    *
    * @param int $email_blast_KEY
    * @return array
@@ -251,26 +251,25 @@ class EmailBlast {
 		$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
 
 
-
 		$result=	SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'email_blast_set_email_blast',
-			                'include'=>'email_blast_KEY',
+			                'include'=>'email_blast_KEY,is_a_test_blast',
 			                'condition'=>'email_blast_set_KEY='.$email_blast_set_KEY,
 			                'json'=>1)
 							))->send()->getBody();
 		$result = json_decode($result);
-
 		$output = array();
 
-
 		foreach ($result as $blast) {
-			$output[] = (object)array_merge((array)self::Statistics($blast->email_blast_KEY),(array)self::getEmail($blast->email_blast_KEY));
-
-
+				if ($blast->is_a_test_blast!=true){
+					$output['blast'	]=  $blast->email_blast_KEY;
+				}
+				else {
+					$output['tests'][] = $blast->email_blast_KEY;
+				}
 		}
-		var_dump($output);
-		exit;
 
+		return $output;
 	}
 
   /**
