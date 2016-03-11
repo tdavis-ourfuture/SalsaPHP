@@ -13,7 +13,7 @@ namespace SalsaPHP;
 
 /**
  * EmailBlast
- * 
+ *
  * Class for reading and writingddsafdsfadsf email blasts.
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
@@ -35,22 +35,22 @@ class EmailBlast {
      *
      * @throws \Exception
      * @return int email_blast_KEY
-     */	
+     */
 	public static function create($refname,$subject,$html,$text,$fromname,$fromaddress,$replyto ) {
 		$client = SalsaPHP::getClient();
 
 
 		$req = $client->post('/save',  array(), array(
-							'object' => 'email_blast', 
+							'object' => 'email_blast',
 				            'json' => '1',
-				            'Reference_Name' => $refname, 
-				            '_From' => $fromname, 
+				            'Reference_Name' => $refname,
+				            '_From' => $fromname,
 				            'Use_Short_Links'=>'true',
-				            'From_Email_address' =>$fromaddress, 
-				            'Reply_To_Email'=>$replyto, 
+				            'From_Email_address' =>$fromaddress,
+				            'Reply_To_Email'=>$replyto,
 				            'From_Name'=>$fromname,
 				            'Text_Content' => $text,
-				            'Subject' => $subject, 
+				            'Subject' => $subject,
 				            'HTML_Content' => $html
 		              	));
 			$result=$req->send();
@@ -61,31 +61,31 @@ class EmailBlast {
 		return $result[0]->key;
 
 		}
-		
-		
+
+
 		/**
-		 * Update the contente.  Really just a weird hack for private reasons.  Call it a joke, an aside. 
+		 * Update the contente.  Really just a weird hack for private reasons.  Call it a joke, an aside.
 		 *
 		 * @param int $email_blast_KEY
 		 * @param string $html
 		 */
 		public static function updateContent($email_blast_KEY,$html){
 		    $client = SalsaPHP::getClient();
-		
-		
+
+
 		    $req = $client->post('/save',  array(), array(
 		        'object' => 'email_blast',
 		        'json' => '1',
 		        'key'=>$email_blast_KEY,
 		        'HTML_Content'=>$html
 		    ));
-		
+
 		    $result=$req->send();
-		
+
 		    return true;
 		}
-		
-		
+
+
   /**
    * Assign a particular query to a blast.
    *
@@ -100,7 +100,7 @@ class EmailBlast {
 		}
 
 		$req = $client->post('/save',  array(), array(
-							'object' => 'email_blast', 
+							'object' => 'email_blast',
 				            'json' => '1',
                		 		'key'=>$email_blast_KEY,
                		 		'query_KEY'=>$query_KEY
@@ -127,7 +127,7 @@ class EmailBlast {
 		$time_scheduled = date('Y-m-d H:i:s',strtotime($time_scheduled));
 
 		$req = $client->post('/save',  array(), array(
-							'object' => 'email_blast', 
+							'object' => 'email_blast',
 							'json' => '1',
 							'key'=>$email_blast_KEY,
                    			'Stage'=>"Scheduled",
@@ -147,7 +147,7 @@ class EmailBlast {
    *
    * @param int $email_blast_KEY
    * @return array
-   */	
+   */
 	public static function getEmail($email_blast_KEY){
 		$client = SalsaPHP::getClient();
 		$req = $client->get('/api/getObjects.sjs',  array(), array(
@@ -166,55 +166,55 @@ class EmailBlast {
    *
    * @param int $limit
    * @return array
-   */	
+   */
 	public static function listEmails($limit=500,$total_target=null,$email_blast_start=null){
-	          
+
 	       if ($limit<=500){
 	           return self::_listEmails($limit,$total_target,0,$email_blast_start);
-	       }	           
+	       }
 	        $o = round(($limit/500));
             $i=0;
 	        $results = array();
             while ($i<= $o) {
                    $offset = 500 * $i;
-                   
+
                    $progress= self::_listEmails(500,$total_target,$offset);
                  $results =	 array_merge($results,$progress);
-              
+
             }
-	           
+
 	   return $results;
 
 	}
-	
+
     public static function _listEmails($limit=500,$total_target=null,$offset=0,$email_blast_start=null){
-        
+
         $client = SalsaPHP::getClient();
         $query =  [ 'object' => 'email_blast',
             'orderBy'=>'-email_blast_KEY',
             'limit'=>$offset.','.$limit,
             'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters,HTML_Content',
             'json'=>1];
-           
+
         if (!empty($email_blast_start)){
-        
+
             $query['condition'] = 'email_blast_KEY>'.$email_blast_start;
-        
+
         }
        elseif (!empty($total_target)){
-            $query['condition'] = (empty($query['condition'])) ? 'total_target_supporters>'.$total_target  : $query['condition'].'&total_target_supporters>'.$total_target; 
-        
+            $query['condition'] = (empty($query['condition'])) ? 'total_target_supporters>'.$total_target  : $query['condition'].'&total_target_supporters>'.$total_target;
+
         }
 
 
-        
+
 
         $req = $client->get('/api/getObjects.sjs',  array(), array(
             'query' => $query
         ));
-        
+
         $result=$req->send();
-        
+
         return json_decode($result->getBody());
     }
   /**
@@ -248,7 +248,7 @@ class EmailBlast {
    * @param int $email_blast_KEY
    * @return array
    */
-	public static function getRawEmailStats($email_blast_KEY){	
+	public static function getRawEmailStats($email_blast_KEY){
 
 
 		$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
@@ -269,20 +269,20 @@ class EmailBlast {
 
 		$return = array();
 		foreach ($array['email']['count'] as $s){
-				$status  =str_replace(' ', '_', $s['Status']);
-				$return[$status]= $s['count'];
+				$status  =strtolower(str_replace(' ', '_', $s['Status']));
+				$return[$status]= (int) $s['count'];
 		}
-		$return['Sent_and_Opened'] +=  $return['Sent_and_Clicked'];
+		$return['sent_and_opened'] +=  $return['sent_and_clicked'];
 		return $return;
 	}
 
   /**
-   * Get a testing set 
+   * Get a testing set
    *
    * @param int $email_blast_KEY
    * @return array
    */
-	public static function getEmailBlastSet($email_blast_KEY){	
+	public static function getEmailBlastSet($email_blast_KEY){
 
 
 		$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
@@ -314,7 +314,7 @@ class EmailBlast {
    *
    * @param int $email_blast_KEY
    * @return int
-   */	
+   */
 	private static function getSetKey($email_blast_KEY){
 				$result=	SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'email_blast_set_email_blast',
