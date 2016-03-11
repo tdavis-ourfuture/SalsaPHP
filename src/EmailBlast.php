@@ -276,6 +276,27 @@ class EmailBlast {
 		return $return;
 	}
 
+
+  /**
+   * Get subject line test results
+   *
+   * @param int $email_blast_KEY
+   * @return array
+   */
+	public static function getSubjectTestResult($email_blast_KEY){
+    $res=  self::getEmailBlastSet($email_blast_KEY);
+    $set = array();
+
+	    foreach ($res['tests'] as $test ){
+	        $res=   self::getRawEmailStats($test);
+            $email=  self::getEmail($test);
+	        $set[] = ['email_blast_KEY'=>$test,'opens'=>$res,'subject'=>$email->Subject];
+	    }
+
+	    return $set;
+	}
+
+
   /**
    * Get a testing set
    *
