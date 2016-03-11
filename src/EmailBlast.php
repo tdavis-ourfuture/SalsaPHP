@@ -233,10 +233,47 @@ class EmailBlast {
 							));
 
 		$result=$req->send();
-	$result = $result->getBody();
-	$result= json_decode($result);
+		$result = $result->getBody();
+		$result= json_decode($result);
 		$result =  array_pop($result);
 		return $result;
+	}
+
+
+  /**
+   * Get stats for email blast directly from email table
+   *
+   * Requires using xml because the getcounts thing is broken and will never, ever be fixed.
+   *
+   * @param int $email_blast_KEY
+   * @return array
+   */
+	public static function getRawEmailStats($email_blast_KEY){	
+
+
+		$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
+
+
+		$result=	SalsaPHP::getClient()->get('/api/getCounts.sjs',  array(), array(
+							'query' => array( 'object' => 'email',
+			                'countColumn'=>'Status',
+			                'condition'=>'email_blast_KEY='.$email_blast_KEY,
+			                'groupBy'=>'Status'
+
+			               )
+							))->send()->getBody();
+
+		$xml = simplexml_load_string($result);
+		$json = json_encode($xml);
+		$array = json_decode($json,TRUE);
+
+		$return = array();
+		foreach ($array['email']['count'] as $s){
+				$status  =str_replace(' ', '_', $s['Status']);
+				$return[$status]= $s['count'];
+		}
+		$return['Sent_and_Opened'] +=  $return['Sent_and_Clicked'];
+		return $return;
 	}
 
   /**
@@ -244,7 +281,7 @@ class EmailBlast {
    *
    * @param int $email_blast_KEY
    * @return array
-   */	
+   */
 	public static function getEmailBlastSet($email_blast_KEY){	
 
 
