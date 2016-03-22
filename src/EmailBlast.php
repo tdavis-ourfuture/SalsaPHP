@@ -45,7 +45,7 @@ class EmailBlast {
 				            'json' => '1',
 				            'Reference_Name' => $refname,
 				            '_From' => $fromname,
-				            'Use_Short_Links'=>'true',
+				            'Use_Short_Links'=>true,
 				            'From_Email_address' =>$fromaddress,
 				            'Reply_To_Email'=>$replyto,
 				            'From_Name'=>$fromname,
