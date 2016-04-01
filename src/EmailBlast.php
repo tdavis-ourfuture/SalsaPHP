@@ -251,7 +251,7 @@ class EmailBlast {
 	public static function getRawEmailStats($email_blast_KEY){
 
 
-		$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
+	//	$email_blast_set_KEY =  self::getSetKey($email_blast_KEY);
 
 
 		$result=	SalsaPHP::getClient()->get('/api/getCounts.sjs',  array(), array(
