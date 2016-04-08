@@ -36,30 +36,29 @@ class EmailBlast {
      * @throws \Exception
      * @return int email_blast_KEY
      */
-	public static function create($refname,$subject,$html,$text,$fromname,$fromaddress,$replyto ) {
-		$client = SalsaPHP::getClient();
+	public static function create($refname,$subject,$html,$text,$fromname,$fromaddress,$replyto,$chapter_KEY=null) {
+			$client = SalsaPHP::getClient();
 
+			$params = ['object' => 'email_blast',
+							'json' => '1',
+							'Reference_Name' => $refname,
+							'_From' => $fromname,
+							'Use_Short_Links'=>true,
+							'From_Email_address' =>$fromaddress,
+							'Reply_To_Email'=>$replyto,
+							'From_Name'=>$fromname,
+							'Text_Content' => $text,
+							'Subject' => $subject,
+							'HTML_Content' => $html
+						];
+			if (!empty($chapter_KEY)){
+				$params['chapter_KEY']=$chapter_KEY;
+			}
+			
+			$result = $client->post('/save',  array(), $params)->send();
+			$result = json_decode($result->getBody());
 
-		$req = $client->post('/save',  array(), array(
-							'object' => 'email_blast',
-				            'json' => '1',
-				            'Reference_Name' => $refname,
-				            '_From' => $fromname,
-				            'Use_Short_Links'=>true,
-				            'From_Email_address' =>$fromaddress,
-				            'Reply_To_Email'=>$replyto,
-				            'From_Name'=>$fromname,
-				            'Text_Content' => $text,
-				            'Subject' => $subject,
-				            'HTML_Content' => $html
-		              	));
-			$result=$req->send();
-
-
-		$result = json_decode($result->getBody());
-
-		return $result[0]->key;
-
+			return $result[0]->key;
 		}
 
 
