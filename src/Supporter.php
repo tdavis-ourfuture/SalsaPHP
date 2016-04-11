@@ -11,14 +11,14 @@ namespace SalsaPHP;
 
 /**
  * Supporter
- * 
+ *
  * Read and write from the suporter table.
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
  * @version .1
  * @package SalsaPHP
  */
-class Supporter {	
+class Supporter {
 
 
   /**
@@ -31,8 +31,8 @@ class Supporter {
    * @param array $args
    * @return int the supporter_KEY
    */
-	public static function addSupporter($email,$firstName='',$lastName='',$zipCode,$args=array()){
-		$arr = array(  
+	public static function addSupporter($email,$firstName='',$lastName='',$zipCode='',$args=array()){
+		$arr = array(
 				     'json'=>1,
 					 'object' => 'supporter',
 	               	  'Email'=>$email,
@@ -44,8 +44,8 @@ class Supporter {
 
 		$result = SalsaPHP::getClient()->get('/save',  array(), array('query' => $arr))->send();
 
-	
-		$result = json_decode($result->getBody());	
+
+		$result = json_decode($result->getBody());
 
 		return $result[0]->key;
 
@@ -80,7 +80,7 @@ class Supporter {
    * @param email $email
    */
 	public static function getSupporterKeyByEmail($email){
-		
+
 		$result = SalsaPHP::getClient()->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'supporter',
 		   		             'orderBy'=>'-supporter_KEY',
@@ -133,7 +133,7 @@ class Supporter {
 				throw new Exception('Group KEY must be an integer');
 		}
 
-		$args = array(		'object' => 'supporter', 
+		$args = array(		'object' => 'supporter',
 							'json' => '1',
 							'link'	=> 'groups',
 							'linkKey' =>$group_KEY,
@@ -212,6 +212,31 @@ class Supporter {
 		 	throw new Exception('Failed to unsubscribe supporter');
 		 }
 		 return true;
+	}
+	/**
+   * Get count of supporters who can receive emails
+   *
+   * @param int
+   */
+	public static function getSupporterCount($chapter_KEY=''){
+		$client = SalsaPHP::getClient();
+
+
+		$result=	SalsaPHP::getClient()->get('/api/getCounts.sjs',  array(), array(
+							'query' => array( 'object' => 'supporter',
+											'condition'=>'Receive_Email>0',
+			                'groupBy'=>'chapter_KEY'
+
+			               )
+							))->send()->getBody();
+
+		$xml = simplexml_load_string($result);
+		$result = json_decode(json_encode($xml),TRUE);
+
+
+
+		return (int)$result['supporter']['count'][0]['count'];
+
 	}
 
 }
