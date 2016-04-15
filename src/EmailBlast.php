@@ -54,7 +54,7 @@ class EmailBlast {
 			if (!empty($chapter_KEY)){
 				$params['chapter_KEY']=$chapter_KEY;
 			}
-			
+
 			$result = $client->post('/save',  array(), $params)->send();
 			$result = json_decode($result->getBody());
 
@@ -157,7 +157,10 @@ class EmailBlast {
 							));
 		$result=$req->send();
 		$result = json_decode($result->getBody());
-		return $result[0];
+		if (isset($result[0])){
+			return $result[0];
+		}
+		return false;
 	}
 
   /**
