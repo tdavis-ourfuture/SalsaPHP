@@ -74,6 +74,25 @@ class Supporter {
 		return $result[0];
 	}
 
+
+  public static function getUnsubscribes($offset=0,$unsubscribe_KEY_START=null){
+            $client = SalsaPHP::getClient();
+            $query =  [ 'object' => 'unsubscribe',
+            'orderBy'=>'-unsubscribe_KEY',
+            'limit'=>$offset.',500',
+            'json'=>1];
+
+            if (!empty($unsubscribe_KEY_START)){
+                $query['condition'] = 'unsubscribe_KEY>'.$unsubscribe_KEY_START;
+            }
+
+            $req = $client->get('/api/getObjects.sjs',  array(), array(
+                'query' => $query
+            ));
+            $result=$req->send();
+            return json_decode($result->getBody());
+  }
+  
   /**
    * Get single supporter key by email address
    *
@@ -237,6 +256,23 @@ class Supporter {
 
 		return (int)$result['supporter']['count'][0]['count'];
 
+	}
+
+	public static function getSupporterEmailStats(){
+
+
+		$result=	SalsaPHP::getClient()->get('/api/getCounts.sjs',  array(), array(
+							'query' => array( 'object' => 'supporter_email_statistics',
+											'groupBy'=>'last_open'
+
+										 )
+							))->send()->getBody();
+
+		$xml = simplexml_load_string($result);
+		$json = json_encode($xml);
+		$array = json_decode($json,TRUE);
+
+		var_dump($array);
 	}
 
 }
