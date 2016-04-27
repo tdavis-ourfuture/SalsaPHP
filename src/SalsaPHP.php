@@ -109,7 +109,7 @@ abstract class SalsaPHP
   public static function initClient()
   {
 
-    if (self::$apiClient==null){
+    if (self::$apiClient==null)
     {
       self::$apiClient = new Guzzle\Http\Client(self::getApiBase());
       $cookiePlugin = new Guzzle\Plugin\Cookie\CookiePlugin(new Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar());
