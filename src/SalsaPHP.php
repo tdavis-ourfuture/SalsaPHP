@@ -13,7 +13,7 @@ use Guzzle;
 
 /**
  * SalsaPHP
- * 
+ *
  * Abstract class to hold settings and suchlike.
  *
  * @author Trevor Davis <tdavis@ourfutureorg>
@@ -31,6 +31,7 @@ abstract class SalsaPHP
    * @var string The Guzzle Client to be used for requests.
    */
   public static $apiClient;
+
 
   /**
    * @var string The Salsa Organization key to be used for requests.
@@ -107,12 +108,17 @@ abstract class SalsaPHP
    */
   public static function initClient()
   {
-    self::$apiClient = new Guzzle\Http\Client(self::getApiBase());
-    $cookiePlugin = new Guzzle\Plugin\Cookie\CookiePlugin(new Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar());
 
-    self::$apiClient->addSubscriber($cookiePlugin);
+    if (self::$apiClient==null){
+    {
+      self::$apiClient = new Guzzle\Http\Client(self::getApiBase());
+      $cookiePlugin = new Guzzle\Plugin\Cookie\CookiePlugin(new Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar());
 
-    Connect::authenticate();
+      self::$apiClient->addSubscriber($cookiePlugin);
+
+      Connect::authenticate();
+    }
+
   }
 
 
