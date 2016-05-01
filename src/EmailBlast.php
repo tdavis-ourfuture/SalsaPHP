@@ -118,7 +118,7 @@ class EmailBlast {
 	public static function scheduleEmail($email_blast_KEY,$time_scheduled){
 		$client = SalsaPHP::getClient();
 
-		if (strtotime("now") < strtotime($time_scheduled)) {
+		if (strtotime("now") > strtotime($time_scheduled)) {
 			throw new Exception('Scheduled time is in the past');
 		}
 
