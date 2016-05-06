@@ -36,32 +36,52 @@ class EmailBlast {
      * @throws \Exception
      * @return int email_blast_KEY
      */
-	public static function create($refname,$subject,$html,$text,$fromname,$fromaddress,$replyto,$chapter_KEY=null) {
-			$client = SalsaPHP::getClient();
+	public static function create($refname,$subject,$html,$text,$fromname,$fromaddress,$replyto ) {
+		$client = SalsaPHP::getClient();
 
-			$params = ['object' => 'email_blast',
-							'json' => '1',
-							'Reference_Name' => $refname,
-							'_From' => $fromname,
-							'Use_Short_Links'=>true,
-							'From_Email_address' =>$fromaddress,
-							'Reply_To_Email'=>$replyto,
-							'From_Name'=>$fromname,
-							'Text_Content' => $text,
-							'Subject' => $subject,
-							'HTML_Content' => $html
-						];
-			if (!empty($chapter_KEY)){
-				$params['chapter_KEY']=$chapter_KEY;
-			}
 
-			$result = $client->post('/save',  array(), $params)->send();
-			$result = json_decode($result->getBody());
+		$req = $client->post('/save',  array(), array(
+							'object' => 'email_blast',
+				            'json' => '1',
+				            'Reference_Name' => $refname,
+				            '_From' => $fromname,
+				            'Use_Short_Links'=>'true',
+				            'From_Email_address' =>$fromaddress,
+				            'Reply_To_Email'=>$replyto,
+				            'From_Name'=>$fromname,
+				            'Text_Content' => $text,
+				            'Subject' => $subject,
+				            'HTML_Content' => $html
+		              	));
+			$result=$req->send();
 
-			return $result[0]->key;
+
+		$result = json_decode($result->getBody());
+
+		return $result[0]->key;
+
 		}
 
+    /**
+		 * Update the subject line.
+		 *
+		 * @param int $email_blast_KEY
+		 * @param string $subject
+		 */
+		public static function updateSubject($email_blast_KEY,$subject){
+		    $client = SalsaPHP::getClient();
 
+		    $req = $client->post('/save',  array(), array(
+		        'object' => 'email_blast',
+		        'json' => '1',
+		        'key'=>$email_blast_KEY,
+		        'Subject'=>$subject
+		    ));
+
+		    $result=$req->send();
+
+		    return true;
+		}
 		/**
 		 * Update the contente.  Really just a weird hack for private reasons.  Call it a joke, an aside.
 		 *
@@ -118,7 +138,7 @@ class EmailBlast {
 	public static function scheduleEmail($email_blast_KEY,$time_scheduled){
 		$client = SalsaPHP::getClient();
 
-		if (strtotime("now") > strtotime($time_scheduled)) {
+		if (strtotime("now") < strtotime($time_scheduled)) {
 			throw new Exception('Scheduled time is in the past');
 		}
 
@@ -136,8 +156,6 @@ class EmailBlast {
 		$result=$req->send();
 
 		return json_decode($result->getBody());
-
-
 	}
 
 
@@ -151,16 +169,12 @@ class EmailBlast {
 		$client = SalsaPHP::getClient();
 		$req = $client->get('/api/getObjects.sjs',  array(), array(
 							'query' => array( 'object' => 'email_blast',
-			                'include'=>'email_blast_KEY,Last_Modified,Date_Created,Date_Requested,Reference_Name,HTML_Content,template_KEY,Stage,Subject,From_Name,From_Email_address,Reply_To_Email,chapter_KEY,campaign_manager_KEY,query_KEY,Status,campaign_KEY,number_failed,number_sent,total_target_supporters',
 			                'condition'=>'email_blast_KEY='.$email_blast_KEY,
 			                'json'=>1)
 							));
 		$result=$req->send();
 		$result = json_decode($result->getBody());
-		if (isset($result[0])){
-			return $result[0];
-		}
-		return false;
+		return $result[0];
 	}
 
   /**
