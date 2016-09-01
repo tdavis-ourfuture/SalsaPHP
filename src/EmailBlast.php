@@ -174,7 +174,9 @@ class EmailBlast {
 							));
 		$result=$req->send();
 		$result = json_decode($result->getBody());
-		return $result[0];
+		//return $result[0] ?? false;
+		
+		return (isset($result[0])) ? $result[0] : false;
 	}
 
   /**
